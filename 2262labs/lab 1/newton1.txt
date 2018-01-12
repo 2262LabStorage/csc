@@ -1,0 +1,9 @@
+% assignment 1a newton
+function x = newton(f,fp,guess, accuracy)
+xNew = guess;
+xOld = guess+1;
+while(abs(xNew-xOld) >= accuracy)
+    xOld = xNew;
+    xNew = xOld - (f(xOld)/fp(xNew));
+end
+x= xNew;

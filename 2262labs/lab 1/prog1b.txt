@@ -1,0 +1,22 @@
+d=650;
+ h=560;
+ x=1700;
+ g=9.81;
+ for (v0 = 180:5:190)
+     f = @(theta) v0*cos(theta)/g*(v0*sin(theta)+ sqrt(v0^2*sin(theta)^2-2*g*h))-d-x;
+ stepsize = 1*pi/180;
+ for (grid_point = 30*pi/180:stepsize:90*pi/180)
+     left_end_point = grid_point;
+     right_end_point = grid_point + stepsize;
+     function_left =f(left_end_point);
+     function_right =f(right_end_point);
+     if (function_left*function_right < 0 || function_left ==0)
+         guess = (left_end_point + right_end_point)/2;
+         theta = fzero(f, guess);
+         y = d*tan(theta) - g*d^2/(2*v0^2*cos(theta)^2);
+         ymaximum = v0^2*sin(theta)^2/(2*g);
+         fprintf('v0=%d theta=%.5f y=%.5f ymax=%.5f\n',v0,theta*180/pi,y,ymaximum);
+     end
+ end
+ fprintf('\n');
+ end
